@@ -1,0 +1,28 @@
+Create “Amit Dugal”
+Create “Gauri Kalla”
+Deposit 1001 500
+Deposit 1001 1000
+Deposit 1001 100
+Deposit 1001 60000
+Deposit 1001 10000
+Deposit 1001 10000
+Balance 1001
+Withdraw 1001 500
+Withdraw 1001 20000
+Withdraw 1001 1000
+Withdraw 1001 1900
+Withdraw 1001 1000
+Withdraw 1001 5000
+Create Akshay Kumar
+Create “Ranveer Singh”
+Deposit 1003 49999
+Transfer 1003 1004 5000
+Transfer 1004 1003 500
+Transfer 1004 1003 30000
+Deposit 1003 40000
+Balance 1003
+Balance 1004
+Deposit 1004 5000
+Deposit 1004 5000
+Deposit 1004 5000
+Transfer 1003 1004 20000
