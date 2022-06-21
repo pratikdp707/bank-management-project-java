@@ -7,8 +7,10 @@ import java.util.StringTokenizer;
 
 public class AccountDriver {
 
-    private static final int asciiOpeningDoubleQuote = 8220;
-    private static final int asciiClosingDoubleQuote = 8221;
+    private static final int ASCII_OPENING_DOUBLE_QUOTE = 8220;
+    private static final int ASCII_CLOSING_DOUBLE_QUOTE = 8221;
+    private static final int DEPOSIT_COUNT = 3;
+    private static final int WITHDRAWAL_COUNT = 3;
     //hashmap to store distinct object for every account
     private HashMap<Integer, AccountOps> accountNumbersMap;
 
@@ -35,8 +37,10 @@ public class AccountDriver {
     *   5. TRANSFER - takes source account number, target account number, amount to be transfered and returns the transaction success or failure after performing operation
     * */
     public void acceptInput(String str){
+
         StringTokenizer input = new StringTokenizer(str, " ");
 
+        //arraylist to store command
         List<String> commands = new ArrayList<>();
 
         while(input.hasMoreTokens()){
@@ -53,18 +57,20 @@ public class AccountDriver {
         int accountNumber, sourceAccountNumber, targetAccountNumber;
         AccountOps accountOps, sourceAccountOps, targetAccountOps;
 
-        switch(commands.get(0).toUpperCase()){
+        String inputOperation = commands.get(0).toUpperCase();
+
+        switch(inputOperation){
             case "CREATE":
                 //checks if the leading characters in the name is '"'
-                String fname = ((int)commands.get(1).charAt(0) == asciiOpeningDoubleQuote) ? commands.get(1).substring(1) : commands.get(1);
+                String fname = ((int)commands.get(1).charAt(0) == ASCII_OPENING_DOUBLE_QUOTE) ? commands.get(1).substring(1) : commands.get(1);
                 String mname = "";
                 String lname;
                 if(commands.size() == 4){
                     mname = commands.get(2);
-                    lname = ((int)commands.get(3).charAt(commands.get(3).length() - 1) == asciiClosingDoubleQuote) ? commands.get(3).substring(0, commands.get(3).length() - 1) : commands.get(3);
+                    lname = ((int)commands.get(3).charAt(commands.get(3).length() - 1) == ASCII_CLOSING_DOUBLE_QUOTE) ? commands.get(3).substring(0, commands.get(3).length() - 1) : commands.get(3);
                 }
                 else{
-                    lname = ((int)commands.get(2).charAt(commands.get(2).length() - 1) == asciiClosingDoubleQuote) ? commands.get(2).substring(0, commands.get(2).length() - 1) : commands.get(2);
+                    lname = ((int)commands.get(2).charAt(commands.get(2).length() - 1) == ASCII_CLOSING_DOUBLE_QUOTE) ? commands.get(2).substring(0, commands.get(2).length() - 1) : commands.get(2);
                 }
 
                 //add account number and its object in the hashmap
@@ -86,7 +92,7 @@ public class AccountDriver {
                 }
 
                 //if account number is valid then it performs deposit operation
-                if(accountOps.getDepositCount() < 3) {
+                if(accountOps.getDepositCount() < DEPOSIT_COUNT) {
                     if (accountOps.validateDeposit(Integer.parseInt(commands.get(2)))) {
                         accountOps.deposit(Integer.parseInt(commands.get(2)));
                         accountOps.displayBalance();
@@ -107,7 +113,7 @@ public class AccountDriver {
                 }
 
                 //if account number is valid, then perform withdraw operation
-                if(accountOps.getWithdrawCount() < 3) {
+                if(accountOps.getWithdrawCount() < WITHDRAWAL_COUNT) {
                     if (accountOps.validateWithdraw(Integer.parseInt(commands.get(2)))) {
                         accountOps.withdraw(Integer.parseInt(commands.get(2)));
                         accountOps.displayBalance();
@@ -149,14 +155,14 @@ public class AccountDriver {
 
                 //if account numbers are valid, perform transfer operation
                 double amount = Integer.parseInt(commands.get(3));
-                if(sourceAccountOps.getWithdrawCount() < 3 && targetAccountOps.getDepositCount() < 3) {
+                if(sourceAccountOps.getWithdrawCount() < WITHDRAWAL_COUNT  && targetAccountOps.getDepositCount() < DEPOSIT_COUNT) {
                     if (sourceAccountOps.validateWithdraw(amount) && targetAccountOps.validateDeposit(amount)){
                         sourceAccountOps.withdraw(amount);
                         targetAccountOps.deposit(amount);
                         System.out.println("Successful");
                     }
                 }
-                else if(sourceAccountOps.getWithdrawCount() >= 3)
+                else if(sourceAccountOps.getWithdrawCount() >= WITHDRAWAL_COUNT)
                     System.out.println("Only 3 withdrawals are allowed in a day for " + sourceAccountNumber);
                 else
                     System.out.println("Only 3 deposits are allowed in a day for " + targetAccountNumber);

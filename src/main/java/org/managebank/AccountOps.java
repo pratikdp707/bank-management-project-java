@@ -2,12 +2,12 @@ package org.managebank;
 
 public class AccountOps extends Account{
 
-    private static final double minDepositAmount = 500;
-    private static final double maxDepositAmount = 50000;
-    private static final double minWithdrawAmount = 1000;
-    private static final double maxWithdrawAmount = 25000;
-    private static final double minAccountBalance = 0;
-    private static final double maxAccountBalance = 100000;
+    private static final double MIN_DEPOSIT_AMOUNT = 500;
+    private static final double MAX_DEPOSIT_AMOUNT = 50000;
+    private static final double MIN_WITHDRAWAL_AMOUNT = 1000;
+    private static final double MAX_WITHDRAWAL_AMOUNT = 25000;
+    private static final double MIN_ACCOUNT_BALANCE = 0;
+    private static final double MAX_ACCOUNT_BALANCE = 100000;
 
     //default constructor
     public AccountOps() {
@@ -46,12 +46,12 @@ public class AccountOps extends Account{
     @Override
     public boolean validateDeposit(double amount){
         double balance = getBalance();
-        if(balance + amount <= maxAccountBalance){
-            if(amount >= minDepositAmount && amount <= maxDepositAmount){
+        if(balance + amount <= MAX_ACCOUNT_BALANCE){
+            if(amount >= MIN_DEPOSIT_AMOUNT && amount <= MAX_DEPOSIT_AMOUNT){
                 return true;
             }
-            else if(amount < minDepositAmount){
-                System.out.println("Minimum Deposit amount is Rs. 500 per trasaction for " + getAccountNumber());
+            else if(amount < MIN_DEPOSIT_AMOUNT){
+                new Exception("Minimum Deposit amount is Rs. 500 per trasaction for " + getAccountNumber());
                 return false;
             }
             else {
@@ -74,11 +74,11 @@ function to perform validations on withdraw operation
     @Override
     public boolean validateWithdraw(double amount){
         double balance = getBalance();
-        if (balance - amount >= minAccountBalance) {
-            if (amount >= minWithdrawAmount && amount <= maxWithdrawAmount) {
+        if (balance - amount >= MIN_ACCOUNT_BALANCE) {
+            if (amount >= MIN_WITHDRAWAL_AMOUNT && amount <= MAX_WITHDRAWAL_AMOUNT) {
                 return true;
             }
-            else if (amount < minWithdrawAmount) {
+            else if (amount < MIN_WITHDRAWAL_AMOUNT) {
                 System.out.println("Minimum withdrawal amount is Rs. 1000 per transaction for " + getAccountNumber());
                 return false;
             }
